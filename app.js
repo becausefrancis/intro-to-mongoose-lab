@@ -1,7 +1,7 @@
 const prompt = require('prompt-sync')();
-const dotenv = require("dotenv"); // require package
-dotenv.config(); // Loads the environment variables from .env file
-const mongoose = require("mongoose"); // require package
+const dotenv = require("dotenv");
+dotenv.config();
+const mongoose = require("mongoose");
 const Customer = require("./models/customer.js")
 
 async function connect() {
@@ -35,8 +35,6 @@ async function connect() {
 
 connect()
 
-// put functions here:
-
 async function createCustomer() {
     const name = prompt('Enter customer name: ');
     const age = prompt('Enter customer age: ');
@@ -59,10 +57,21 @@ async function viewCustomers() {
     connect();
 }
 
-// Enter update customer function here:
+async function updateCustomer() {
+    const id = prompt('Enter customer ID to update: ');
+    const newName = prompt('Update name: ');
+    const newAge = prompt('Update age: ');
 
+    const result = await Customer.findByIdAndUpdate(id, {name: newName, age: newAge});
+        if (result) {
+            console.log('Customer updated successfully.');
+        } else {
+            console.log('Customer not found.');
+        }
 
-//
+    connect();
+}
+
 async function deleteCustomer() {
     const id = prompt('Enter customer ID to delete: ');
 
